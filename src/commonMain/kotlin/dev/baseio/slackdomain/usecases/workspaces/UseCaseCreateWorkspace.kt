@@ -23,21 +23,4 @@ class UseCaseCreateWorkspace(private val workspaceSource: SKNetworkSourceWorkspa
             skKeyValueData.save(LOGGED_IN_USER, json)
         }
     }
-
-/*    private fun kmskCreateWorkspaceRequest(
-        email: String,
-        password: String,
-        domain: String
-    ) = kmSKCreateWorkspaceRequest {
-        this.user = kmSKAuthUser {
-            this.email = email
-            this.password = password
-            this.user = kmSKUser {
-                this.email = email
-            }
-        }
-        this.workspace = kmSKWorkspace {
-            this.name = domain
-        }
-    }*/
 }
