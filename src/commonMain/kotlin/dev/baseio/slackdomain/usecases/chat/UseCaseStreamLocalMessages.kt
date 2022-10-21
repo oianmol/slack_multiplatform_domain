@@ -5,11 +5,13 @@ import dev.baseio.slackdomain.model.message.DomainLayerMessages
 import dev.baseio.slackdomain.usecases.channels.UseCaseWorkspaceChannelRequest
 import kotlinx.coroutines.flow.Flow
 
-class UseCaseFetchMessages(private val skLocalDataSourceMessages: SKLocalDataSourceMessages) {
+class UseCaseStreamLocalMessages(private val skLocalDataSourceMessages: SKLocalDataSourceMessages) {
   operator fun invoke(useCaseWorkspaceChannelRequest: UseCaseWorkspaceChannelRequest): Flow<List<DomainLayerMessages.SKMessage>> {
     return skLocalDataSourceMessages.streamLocalMessages(
       workspaceId = useCaseWorkspaceChannelRequest.workspaceId,
-      useCaseWorkspaceChannelRequest.channelId!!
+      useCaseWorkspaceChannelRequest.channelId!!,
+      useCaseWorkspaceChannelRequest.limit,
+      useCaseWorkspaceChannelRequest.offset
     )
   }
 }
