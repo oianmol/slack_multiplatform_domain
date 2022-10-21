@@ -12,11 +12,21 @@ interface SKLocalDataSourceMessages {
     offset: Int
   ): Flow<List<DomainLayerMessages.SKMessage>>
 
+  fun streamLocalMessages(
+    workspaceId: String,
+    userId: String,
+  ): Flow<List<DomainLayerMessages.SKMessage>>
+
   suspend fun getLocalMessages(
     workspaceId: String,
     userId: String,
     limit: Int,
     offset: Int
+  ): List<DomainLayerMessages.SKMessage>
+
+  suspend fun getLocalMessages(
+    workspaceId: String,
+    userId: String,
   ): List<DomainLayerMessages.SKMessage>
 
   suspend fun saveMessage(params: DomainLayerMessages.SKMessage): DomainLayerMessages.SKMessage
