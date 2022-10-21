@@ -10,8 +10,6 @@ class UseCaseStreamLocalMessages(private val skLocalDataSourceMessages: SKLocalD
     return skLocalDataSourceMessages.streamLocalMessages(
       workspaceId = useCaseWorkspaceChannelRequest.workspaceId,
       useCaseWorkspaceChannelRequest.channelId!!,
-      useCaseWorkspaceChannelRequest.limit,
-      useCaseWorkspaceChannelRequest.offset
     )
   }
 }
