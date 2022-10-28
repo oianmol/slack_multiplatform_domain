@@ -9,7 +9,7 @@ interface SKLocalDataSourceReadChannels {
   suspend fun getChannel(request: UseCaseWorkspaceChannelRequest): DomainLayerChannels.SKChannel?
   fun fetchAllChannels(workspaceId: String): Flow<List<DomainLayerChannels.SKChannel>>
   fun fetchChannelsOrByName(workspaceId: String, params: String?): Flow<List<DomainLayerChannels.SKChannel>>
-  fun getChannelById(workspaceId: String, uuid: String): DomainLayerChannels.SKChannel?
-  fun getChannelByReceiverId(workspaceId: String, uuid: String): DomainLayerChannels.SKChannel.SkDMChannel?
-  fun getChannelByReceiverIdAndSenderId(workspaceId: String, receiverId: String, senderId: String): DomainLayerChannels.SKChannel.SkDMChannel?
+  suspend fun getChannelById(workspaceId: String, uuid: String): DomainLayerChannels.SKChannel?
+  suspend fun getChannelByReceiverId(workspaceId: String, uuid: String): DomainLayerChannels.SKChannel.SkDMChannel?
+  suspend fun getChannelByReceiverIdAndSenderId(workspaceId: String, receiverId: String, senderId: String): DomainLayerChannels.SKChannel.SkDMChannel?
 }
