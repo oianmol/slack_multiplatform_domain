@@ -16,6 +16,8 @@ interface DomainLayerMessages {
     var isDeleted: Boolean = false,
     var isSynced: Boolean = false
   ) {
+    val decodedMessage: String = ""
+
     override fun equals(other: Any?): Boolean {
       if (this === other) return true
       if (other == null || this::class != other::class) return false
