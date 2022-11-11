@@ -21,8 +21,8 @@ interface DomainLayerChannels {
       val createdDate: Long = Clock.System.now().toEpochMilliseconds(),
       val modifiedDate: Long = Clock.System.now().toEpochMilliseconds(),
       val deleted: Boolean,
-      val userPublicKey: DomainLayerUsers.SKUserPublicKey = DomainLayerUsers.SKUserPublicKey(arrayOf<Byte>().toByteArray())
-    ) : SKChannel(workId, uuid, publicKey = userPublicKey)
+      val channelPublicKey: DomainLayerUsers.SKUserPublicKey = DomainLayerUsers.SKUserPublicKey(arrayOf<Byte>().toByteArray())
+    ) : SKChannel(workId, uuid, publicKey = channelPublicKey)
 
     data class SkGroupChannel(
       var uuid: String,
@@ -32,8 +32,8 @@ interface DomainLayerChannels {
       val modifiedDate: Long = Clock.System.now().toEpochMilliseconds(),
       var avatarUrl: String?,
       val deleted: Boolean,
-      val userPublicKey: DomainLayerUsers.SKUserPublicKey = DomainLayerUsers.SKUserPublicKey(arrayOf<Byte>().toByteArray())
-    ) : SKChannel(workId, uuid, channelName = name, pictureUrl = avatarUrl, publicKey = userPublicKey)
+      val channelPublicKey: DomainLayerUsers.SKUserPublicKey = DomainLayerUsers.SKUserPublicKey(arrayOf<Byte>().toByteArray())
+    ) : SKChannel(workId, uuid, channelName = name, pictureUrl = avatarUrl, publicKey = channelPublicKey)
   }
 
   data class SkChannelMember(

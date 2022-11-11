@@ -3,5 +3,10 @@ package dev.baseio.slackdomain.datasources.remote.channels
 import dev.baseio.slackdomain.model.channel.DomainLayerChannels
 
 interface SKNetworkSourceChannel {
-  suspend fun inviteUserToChannel(userId: String, channelId: String, workspaceId: String): List<DomainLayerChannels.SkChannelMember>
+  suspend fun inviteUserToChannelFromOtherDeviceOrUser(
+    channel: DomainLayerChannels.SKChannel,
+    userName: String
+  ): List<DomainLayerChannels.SkChannelMember>
+
+  suspend fun addUsersToChannelOnceCreated(channelNew: DomainLayerChannels.SKChannel): List<DomainLayerChannels.SkChannelMember>
 }

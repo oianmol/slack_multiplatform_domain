@@ -21,20 +21,33 @@ class UseCaseFetchChannelsWithSearch(
 ) {
   operator fun invoke(workspaceId: String, search: String): Flow<List<DomainLayerChannels.SKChannel>> {
     val localUsers = useCaseFetchLocalUsers(workspaceId, search).map { skUsers ->
-      skUsers.map { skUser ->
+      skUsers.mapNotNull { skUser ->
         val user = Json.decodeFromString<DomainLayerUsers.SKUser>(skLocalKeyValueSource.get(LOGGED_IN_USER)!!)
         val dmChannel =
           skLocalDataSourceReadChannels.getChannelByReceiverIdAndSenderId(workspaceId, skUser.uuid, user.uuid)
-        DomainLayerChannels.SKChannel.SkDMChannel(
-          workId = workspaceId,
-          senderId = dmChannel?.senderId ?: "",
-          receiverId = skUser.uuid,
-          uuid = dmChannel?.uuid ?: "",
-          deleted = false,
-          userPublicKey = dmChannel?.userPublicKey?:throw RuntimeException("Expected a key")
-        ).apply {
-          channelName = skUser.name
-          pictureUrl = skUser.avatarUrl
+        dmChannel?.let {
+          DomainLayerChannels.SKChannel.SkDMChannel(
+            workId = workspaceId,
+            senderId = dmChannel.senderId,
+            receiverId = skUser.uuid,
+            uuid = dmChannel.uuid,
+            deleted = false,
+            channelPublicKey = dmChannel.channelPublicKey
+          ).apply {
+            channelName = skUser.name
+            pictureUrl = skUser.avatarUrl
+          }
+        }?: kotlin.run {
+          DomainLayerChannels.SKChannel.SkDMChannel(
+            workId = workspaceId,
+            senderId = user.uuid,
+            receiverId = skUser.uuid,
+            uuid = "",
+            deleted = false,
+          ).apply {
+            channelName = skUser.name
+            pictureUrl = skUser.avatarUrl
+          }
         }
       }
     }

@@ -14,7 +14,7 @@ interface SKLocalDataSourceMessages {
 
   fun streamLocalMessages(
     workspaceId: String,
-    userId: String,
+    channelId: String,
   ): Flow<List<DomainLayerMessages.SKMessage>>
 
   suspend fun getLocalMessages(
@@ -29,5 +29,5 @@ interface SKLocalDataSourceMessages {
     userId: String,
   ): List<DomainLayerMessages.SKMessage>
 
-  suspend fun saveMessage(params: DomainLayerMessages.SKMessage): DomainLayerMessages.SKMessage
+  suspend fun saveMessage(params: DomainLayerMessages.SKMessage, message: ByteArray?): DomainLayerMessages.SKMessage
 }
