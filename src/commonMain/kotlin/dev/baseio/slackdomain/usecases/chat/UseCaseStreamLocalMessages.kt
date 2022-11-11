@@ -7,20 +7,24 @@ import dev.baseio.slackdomain.usecases.channels.UseCaseWorkspaceChannelRequest
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-class UseCaseStreamLocalMessages(private val skLocalDataSourceMessages: SKLocalDataSourceMessages,private val iDataDecryptor: IDataDecryptor) {
-  operator fun invoke(useCaseWorkspaceChannelRequest: UseCaseWorkspaceChannelRequest): Flow<List<DomainLayerMessages.SKMessage>> {
-    return skLocalDataSourceMessages.streamLocalMessages(
-      workspaceId = useCaseWorkspaceChannelRequest.workspaceId,
-      useCaseWorkspaceChannelRequest.channelId!!,
-    ).map { it ->
-      it.map {
-        kotlin.runCatching {
-          it.decodedMessage = iDataDecryptor.decrypt(it.message).decodeToString()
-        }.exceptionOrNull()?.let {
-          it.printStackTrace()
+class UseCaseStreamLocalMessages(
+    private val skLocalDataSourceMessages: SKLocalDataSourceMessages,
+    private val iDataDecryptor: IDataDecryptor
+) {
+    operator fun invoke(useCaseWorkspaceChannelRequest: UseCaseWorkspaceChannelRequest): Flow<List<DomainLayerMessages.SKMessage>> {
+        return skLocalDataSourceMessages.streamLocalMessages(
+            workspaceId = useCaseWorkspaceChannelRequest.workspaceId,
+            useCaseWorkspaceChannelRequest.channelId!!,
+        ).map { skMessageList ->
+          skMessageList.map { skMessage ->
+                kotlin.runCatching {
+                    skMessage.decodedMessage = iDataDecryptor.decrypt(skMessage.message).decodeToString()
+                }.exceptionOrNull()?.let { throwable ->
+                    throwable.printStackTrace()
+                    skMessage.decodedMessage = "Waiting for message..."
+                }
+                skMessage
+            }
         }
-        it
-      }
     }
-  }
 }

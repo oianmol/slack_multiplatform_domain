@@ -19,6 +19,10 @@ class UseCaseSendMessage(
                     message = iDataEncrypter.encrypt(
                         params.message,
                         publicKeyRetriever.retrieve(params.sender, params.channelId, params.workspaceId)
+                    ),
+                    localMessage = iDataEncrypter.encrypt(
+                        params.message,
+                        publicKeyRetriever.getMyPublicKey(params.workspaceId, params.sender)
                     )
                 )
             )
