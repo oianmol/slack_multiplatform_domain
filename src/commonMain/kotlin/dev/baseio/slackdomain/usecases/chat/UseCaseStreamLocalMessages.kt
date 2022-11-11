@@ -20,8 +20,9 @@ class UseCaseStreamLocalMessages(
                 kotlin.runCatching {
                     skMessage.decodedMessage = iDataDecryptor.decrypt(skMessage.message).decodeToString()
                 }.exceptionOrNull()?.let { throwable ->
-                    throwable.printStackTrace()
-                    skMessage.decodedMessage = "Waiting for message..."
+                    kotlin.runCatching {
+                      skMessage.decodedMessage = iDataDecryptor.decrypt(skMessage.message).decodeToString()
+                    }
                 }
                 skMessage
             }
