@@ -30,7 +30,8 @@ class UseCaseFetchChannelsWithSearch(
           senderId = dmChannel?.senderId ?: "",
           receiverId = skUser.uuid,
           uuid = dmChannel?.uuid ?: "",
-          deleted = false
+          deleted = false,
+          userPublicKey = dmChannel?.userPublicKey?:throw RuntimeException("Expected a key")
         ).apply {
           channelName = skUser.name
           pictureUrl = skUser.avatarUrl
