@@ -9,18 +9,12 @@ import dev.baseio.slackdomain.datasources.remote.messages.SKNetworkDataSourceMes
 class UseCaseSendMessage(
   private val SKLocalDataSourceMessages: SKLocalDataSourceMessages,
   private val skNetworkDataSourceMessages: SKNetworkDataSourceMessages,
-  private val iDataEncrypter: IDataEncrypter,
-  private val publicKeyRetriever: PublicKeyRetriever
+
 ) {
   suspend operator fun invoke(params: DomainLayerMessages.SKMessage): DomainLayerMessages.SKMessage {
     val message =
       skNetworkDataSourceMessages.sendMessage(
-        params.copy(
-          message = iDataEncrypter.encrypt(
-            params.message,
-            publicKeyRetriever.retrieve(params.sender, params.channelId, params.workspaceId), chainId = params.channelId
-          ),
-        )
+        params
       )
     return SKLocalDataSourceMessages.saveMessage(
       message.copy(

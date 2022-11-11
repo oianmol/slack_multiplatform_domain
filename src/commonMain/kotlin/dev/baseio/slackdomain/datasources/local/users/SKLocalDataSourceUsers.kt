@@ -9,4 +9,5 @@ interface SKLocalDataSourceUsers {
     fun getUsers(workspace: String): List<DomainLayerUsers.SKUser>
     fun getUser(workspaceId: String, uuid: String): DomainLayerUsers.SKUser?
     fun saveUser(senderInfo: DomainLayerUsers.SKUser?)
+    fun getUserByUserName(workspaceId: String, userName: String): DomainLayerUsers.SKUser?
 }

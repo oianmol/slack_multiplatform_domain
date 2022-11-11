@@ -40,6 +40,7 @@ interface DomainLayerChannels {
     val uuid: String,
     val workspaceId: String,
     val channelId: String,
-    val memberId: String
+    val memberId: String,
+    val channelEncryptedPrivateKey: DomainLayerUsers.SKUserPublicKey= DomainLayerUsers.SKUserPublicKey(arrayOf<Byte>().toByteArray())
   )
 }
