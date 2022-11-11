@@ -18,7 +18,7 @@ class UseCaseSendMessage(
         params.copy(
           message = iDataEncrypter.encrypt(
             params.message,
-            publicKeyRetriever.retrieve(params.sender, params.channelId, params.workspaceId)
+            publicKeyRetriever.retrieve(params.sender, params.channelId, params.workspaceId), chainId = params.channelId
           ),
         )
       )
@@ -26,7 +26,7 @@ class UseCaseSendMessage(
       message.copy(
         localMessage = iDataEncrypter.encrypt(
           params.message,
-          publicKeyRetriever.getMyPublicKey(params.workspaceId, params.sender)
+          publicKeyRetriever.getMyPublicKey(params.workspaceId, params.sender), chainId = params.channelId
         )
       )
     )

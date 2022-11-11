@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.map
 
 class UseCaseFetchChannelsWithLastMessage(
   private val SKLocalDataSourceChannelLastMessage: SKLocalDataSourceChannelLastMessage,
-  private val iDataDecryptor: IDataDecryptor
+  private val iDataDecryptor: IDataDecryptor,
 ) {
 
   operator fun invoke(workspaceId: String): Flow<List<DomainLayerMessages.SKLastMessage>> {
@@ -18,12 +18,16 @@ class UseCaseFetchChannelsWithLastMessage(
         var messageFinal = skLastMessage.message
         runCatching {
           messageFinal =
-            messageFinal.copy(decodedMessage = iDataDecryptor.decrypt(messageFinal.message).decodeToString())
+            messageFinal.copy(
+              decodedMessage = iDataDecryptor.decrypt(messageFinal.message, chainId = skLastMessage.channel.channelId).decodeToString()
+            )
         }.exceptionOrNull()
           ?.let {
             kotlin.runCatching {
               messageFinal =
-                messageFinal.copy(decodedMessage = iDataDecryptor.decrypt(messageFinal.localMessage).decodeToString())
+                messageFinal.copy(
+                  decodedMessage = iDataDecryptor.decrypt(messageFinal.localMessage, chainId = skLastMessage.channel.channelId).decodeToString()
+                )
             }
           }
         skLastMessage.copy(message = messageFinal)
