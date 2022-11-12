@@ -6,30 +6,33 @@ import dev.baseio.slackdomain.datasources.remote.messages.SKNetworkDataSourceMes
 import dev.baseio.slackdomain.model.users.DomainLayerUsers
 
 class UseCaseSendMessage(
-  private val SKLocalDataSourceMessages: SKLocalDataSourceMessages,
-  private val skNetworkDataSourceMessages: SKNetworkDataSourceMessages,
+    private val SKLocalDataSourceMessages: SKLocalDataSourceMessages,
+    private val skNetworkDataSourceMessages: SKNetworkDataSourceMessages,
 
-  ) {
-  suspend operator fun invoke(
-    params: DomainLayerMessages.SKMessage,
-    publicKey: dev.baseio.slackdomain.model.users.DomainLayerUsers.SKUserPublicKey
-  ): DomainLayerMessages.SKMessage {
-    val message =
-      skNetworkDataSourceMessages.sendMessage(
-        params,publicKey
-      )
-    return SKLocalDataSourceMessages.saveMessage(
-      message
-    )
-  }
+    ) {
+    suspend operator fun invoke(
+        params: DomainLayerMessages.SKMessage,
+        publicKey: dev.baseio.slackdomain.model.users.DomainLayerUsers.SKUserPublicKey
+    ): DomainLayerMessages.SKMessage {
+        val message =
+            skNetworkDataSourceMessages.sendMessage(
+                params, publicKey
+            )
+        return SKLocalDataSourceMessages.saveMessage(
+            message
+        )
+    }
 
-  suspend fun deleteMessage(params: DomainLayerMessages.SKMessage, publicKey: DomainLayerUsers.SKUserPublicKey): DomainLayerMessages.SKMessage {
-    val message =
-      skNetworkDataSourceMessages.deleteMessage(
-        params,publicKey
-      )
-    return SKLocalDataSourceMessages.saveMessage(
-      message
-    )
-  }
+    suspend fun deleteMessage(
+        params: DomainLayerMessages.SKMessage,
+        publicKey: DomainLayerUsers.SKUserPublicKey
+    ): DomainLayerMessages.SKMessage {
+        val message =
+            skNetworkDataSourceMessages.deleteMessage(
+                params, publicKey
+            )
+        return SKLocalDataSourceMessages.saveMessage(
+            message
+        )
+    }
 }
