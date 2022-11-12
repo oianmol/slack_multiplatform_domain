@@ -18,7 +18,7 @@ class UseCaseFetchAndUpdateChangeInMessages(
           // SKLocalDataSourceMessages.saveMessage(it)
         }
         messageChangeSnapshot.second?.let {
-          SKLocalDataSourceMessages.saveMessage(it, null)
+          SKLocalDataSourceMessages.saveMessage(it)
         }
         Unit
       }

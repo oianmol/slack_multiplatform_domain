@@ -2,6 +2,7 @@ package dev.baseio.slackdomain.datasources.local.messages
 
 
 import dev.baseio.slackdomain.model.message.DomainLayerMessages
+import dev.baseio.slackdomain.model.users.DomainLayerUsers
 import kotlinx.coroutines.flow.Flow
 
 interface SKLocalDataSourceMessages {
@@ -29,5 +30,7 @@ interface SKLocalDataSourceMessages {
     userId: String,
   ): List<DomainLayerMessages.SKMessage>
 
-  suspend fun saveMessage(params: DomainLayerMessages.SKMessage, message: ByteArray?): DomainLayerMessages.SKMessage
+  suspend fun saveMessage(
+    params: DomainLayerMessages.SKMessage,
+  ): DomainLayerMessages.SKMessage
 }

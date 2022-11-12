@@ -15,7 +15,6 @@ interface DomainLayerMessages {
         val modifiedDate: Long,
         var isDeleted: Boolean = false,
         var isSynced: Boolean = false,
-        var localMessage: ByteArray,
         var decodedMessage: String = ""
     ) {
         override fun equals(other: Any?): Boolean {
@@ -33,7 +32,6 @@ interface DomainLayerMessages {
             if (modifiedDate != other.modifiedDate) return false
             if (isDeleted != other.isDeleted) return false
             if (isSynced != other.isSynced) return false
-            if (!localMessage.contentEquals(other.localMessage)) return false
             if (decodedMessage != other.decodedMessage) return false
 
             return true
@@ -49,7 +47,6 @@ interface DomainLayerMessages {
             result = 31 * result + modifiedDate.hashCode()
             result = 31 * result + isDeleted.hashCode()
             result = 31 * result + isSynced.hashCode()
-            result = 31 * result + localMessage.contentHashCode()
             result = 31 * result + decodedMessage.hashCode()
             return result
         }

@@ -12,7 +12,7 @@ class UseCaseFetchAndSaveMessages(
   suspend operator fun invoke(request: UseCaseWorkspaceChannelRequest): List<DomainLayerMessages.SKMessage> {
     return kotlin.run {
       skNetworkDataSourceMessages.fetchMessages(request).getOrThrow().map { skMessage ->
-        skLocalDataSourceMessages.saveMessage(skMessage, null)
+        skLocalDataSourceMessages.saveMessage(skMessage)
         skMessage
       }
     }
