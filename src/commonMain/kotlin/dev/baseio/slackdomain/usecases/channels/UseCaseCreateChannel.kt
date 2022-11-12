@@ -15,7 +15,8 @@ class UseCaseCreateChannel(
     return kotlin.runCatching {
       val channel = skNetworkDataSourceWriteChannels.createChannel(params).getOrThrow()
       SKLocalDataSourceCreateChannels.saveChannel(channel)
-      useCaseInviteUserToChannel.addUsersToChannelOnceCreated(channel)
+     val result =  useCaseInviteUserToChannel.addUsersToChannelOnceCreated(channel)
+      result
       skLocalDataSourceReadChannels.getChannelById(channel.workspaceId, channel.channelId)!!
     }
   }
