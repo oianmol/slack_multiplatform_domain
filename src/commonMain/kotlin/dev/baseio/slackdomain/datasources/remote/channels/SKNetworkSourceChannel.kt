@@ -8,5 +8,4 @@ interface SKNetworkSourceChannel {
     userName: String
   ): List<DomainLayerChannels.SkChannelMember>
 
-  suspend fun addUsersToChannelOnceCreated(channelNew: DomainLayerChannels.SKChannel): List<DomainLayerChannels.SkChannelMember>
 }

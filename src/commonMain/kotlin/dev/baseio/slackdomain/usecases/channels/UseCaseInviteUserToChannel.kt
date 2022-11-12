@@ -11,9 +11,4 @@ class UseCaseInviteUserToChannel(private val networkSourceChannels: SKNetworkSou
     }
   }
 
-  suspend fun addUsersToChannelOnceCreated(channelNew: DomainLayerChannels.SKChannel): Result<List<DomainLayerChannels.SkChannelMember>> {
-    return kotlin.runCatching {
-      networkSourceChannels.addUsersToChannelOnceCreated(channelNew)
-    }
-  }
 }
