@@ -12,4 +12,5 @@ interface SKLocalDataSourceReadChannels {
   suspend fun getChannelById(workspaceId: String, uuid: String): DomainLayerChannels.SKChannel?
   suspend fun getChannelByReceiverId(workspaceId: String, uuid: String): DomainLayerChannels.SKChannel.SkDMChannel?
   suspend fun getChannelByReceiverIdAndSenderId(workspaceId: String, receiverId: String, senderId: String): DomainLayerChannels.SKChannel.SkDMChannel?
+  suspend fun getChannelByChannelId(channelId:String): DomainLayerChannels.SKChannel?
 }
