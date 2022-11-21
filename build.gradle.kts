@@ -1,5 +1,6 @@
 plugins {
   kotlin("multiplatform")
+  kotlin("native.cocoapods")
   kotlin("plugin.serialization") version "1.7.20"
   id("com.android.library")
   id("maven-publish")
@@ -26,6 +27,16 @@ kotlin {
   iosArm64()
   iosSimulatorArm64()
   iosX64()
+
+  cocoapods {
+    summary = "Some description for the Shared Module"
+    homepage = "Link to the Shared Module homepage"
+    ios.deploymentTarget = "14.1"
+    podfile = project.file("../iosApp/Podfile")
+    framework {
+      baseName = "slack_domain_layer"
+    }
+  }
 
   sourceSets {
 
