@@ -1,75 +1,79 @@
+import org.jetbrains.kotlin.gradle.plugin.mpp.apple.XCFramework
+
 plugins {
-  kotlin("multiplatform")
-  kotlin("native.cocoapods")
-  kotlin("plugin.serialization") version "1.7.20"
-  id("com.android.library")
-  id("maven-publish")
+    kotlin("multiplatform")
+    kotlin("native.cocoapods")
+    kotlin("plugin.serialization") version "1.7.20"
+    id("com.android.library")
+    id("maven-publish")
 }
 
 group = "dev.baseio.slackclone"
 version = "1.0"
 
 repositories {
-  mavenCentral()
-  mavenLocal()
-  google() // here
+    mavenCentral()
+    mavenLocal()
+    google() // here
 }
 
 kotlin {
-  android {
-    publishLibraryVariants("release")
-  }
-  jvm {
-    compilations.all {
-      kotlinOptions.jvmTarget = "11"
+    android {
+        publishLibraryVariants("release")
     }
-  }
-  iosArm64()
-  iosSimulatorArm64()
-  iosX64()
-
-  cocoapods {
-    summary = "Some description for the Shared Module"
-    homepage = "Link to the Shared Module homepage"
-    ios.deploymentTarget = "14.1"
-    podfile = project.file("../iosApp/Podfile")
-    framework {
-      baseName = "slack_domain_layer"
+    jvm {
+        compilations.all {
+            kotlinOptions.jvmTarget = "11"
+        }
     }
-  }
 
-  sourceSets {
-
-    val commonMain by getting {
-      dependencies {
-        implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
-        implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.0")
-        implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.0")
-        implementation(kotlin("stdlib-common"))
-      }
+    cocoapods {
+        summary = "Some description for the Shared Module"
+        homepage = "Link to the Shared Module homepage"
+        version = "1.0"
+        ios.deploymentTarget = "14.1"
+        podfile = project.file("../iosApp/Podfile")
+        framework {
+            baseName = "slack_domain_layer"
+        }
     }
-  }
+
+    iosX64()
+    iosArm64()
+    iosSimulatorArm64()
+
+    sourceSets {
+
+        val commonMain by getting {
+            dependencies {
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
+                implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.0")
+                implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.0")
+                implementation(kotlin("stdlib-common"))
+            }
+        }
+    }
 }
 
 kotlin {
-  targets.withType<org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget> {
-    binaries.all {
-      // TODO: the current compose binary surprises LLVM, so disable checks for now.
-      freeCompilerArgs += "-Xdisable-phases=VerifyBitcode"
+    targets.withType<org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget> {
+        binaries.all {
+            // TODO: the current compose binary surprises LLVM, so disable checks for now.
+            freeCompilerArgs += "-Xdisable-phases=VerifyBitcode"
+        }
     }
-  }
 }
 
 android {
-  compileSdk = 33
-  sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
-  defaultConfig {
-    minSdk = 24
-    targetSdk = 33
-  }
-  compileOptions {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
-  }
+    compileSdk = 33
+    sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
+    defaultConfig {
+        minSdk = 24
+        targetSdk = 33
+    }
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
 }
 
