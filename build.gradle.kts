@@ -5,6 +5,7 @@ plugins {
     kotlin("native.cocoapods")
     kotlin("plugin.serialization") version "1.7.20"
     id("com.android.library")
+    id("com.rickclephas.kmp.nativecoroutines")
     id("maven-publish")
 }
 
