@@ -28,6 +28,16 @@ kotlin {
         }
     }
 
+    cocoapods {
+        summary = "Slack domain Library"
+        homepage = "https://github.com/oianmol"
+        ios.deploymentTarget = "14.1"
+        framework {
+            baseName = "slack_domain_layer"
+            isStatic = true
+        }
+    }
+
     iosX64()
     iosArm64()
     iosSimulatorArm64()

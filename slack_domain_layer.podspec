@@ -1,14 +1,14 @@
 Pod::Spec.new do |spec|
     spec.name                     = 'slack_domain_layer'
     spec.version                  = '1.0'
-    spec.homepage                 = ''
+    spec.homepage                 = 'https://github.com/oianmol'
     spec.source                   = { :http=> ''}
     spec.authors                  = ''
     spec.license                  = ''
-    spec.summary                  = ''
+    spec.summary                  = 'Slack domain Library'
     spec.vendored_frameworks      = 'build/cocoapods/framework/slack_domain_layer.framework'
     spec.libraries                = 'c++'
-                
+    spec.ios.deployment_target = '14.1'
                 
                 
     spec.pod_target_xcconfig = {
