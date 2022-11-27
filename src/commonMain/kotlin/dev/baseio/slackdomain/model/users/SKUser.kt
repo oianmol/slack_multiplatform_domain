@@ -39,6 +39,11 @@ interface DomainLayerUsers {
     data class SKUserPublicKey(
         val keyBytes: ByteArray
     ) {
+        companion object {
+            val DEFAULT
+                get() = SKUserPublicKey(arrayOf<Byte>().toByteArray())
+        }
+
         override fun equals(other: Any?): Boolean {
             if (this === other) return true
             if (other == null || this::class != other::class) return false
