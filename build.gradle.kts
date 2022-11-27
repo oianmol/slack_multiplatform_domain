@@ -5,6 +5,7 @@ plugins {
     kotlin("native.cocoapods")
     kotlin("plugin.serialization") version "1.7.20"
     id("com.android.library")
+    id("com.rickclephas.kmp.nativecoroutines")
     id("maven-publish")
 }
 
@@ -27,43 +28,19 @@ kotlin {
         }
     }
 
-    val iosx64 = iosX64()
-    val iosarm64 = iosArm64()
-    val iossimulatorarm64 = iosSimulatorArm64()
-
-    configure(listOf(iosx64, iosarm64,iossimulatorarm64)) {
-        binaries.framework {
+    cocoapods {
+        summary = "Slack domain Library"
+        homepage = "https://github.com/oianmol"
+        ios.deploymentTarget = "14.1"
+        framework {
             baseName = "slack_domain_layer"
+            isStatic = true
         }
     }
 
-    // Create a task to build a fat framework.
-    tasks.register<org.jetbrains.kotlin.gradle.tasks.FatFrameworkTask>("debugFatFramework") {
-        // The fat framework must have the same base name as the initial frameworks.
-        baseName = "slack_domain_layer"
-        // The default destination directory is "<build directory>/fat-framework".
-        destinationDir = buildDir.resolve("fat-framework/debug")
-        // Specify the frameworks to be merged.
-        from(
-            iosarm64.binaries.getFramework("DEBUG"),
-            iosx64.binaries.getFramework("DEBUG"),
-            //iossimulatorarm64.binaries.getFramework("DEBUG")
-        )
-    }
-
-    // Create a task to build a fat framework.
-    tasks.register<org.jetbrains.kotlin.gradle.tasks.FatFrameworkTask>("releaseFatFramework") {
-        // The fat framework must have the same base name as the initial frameworks.
-        baseName = "slack_domain_layer"
-        // The default destination directory is "<build directory>/fat-framework".
-        destinationDir = buildDir.resolve("fat-framework/release")
-        // Specify the frameworks to be merged.
-        from(
-            iosarm64.binaries.getFramework("RELEASE"),
-            iosx64.binaries.getFramework("RELEASE"),
-            //iossimulatorarm64.binaries.getFramework("RELEASE")
-        )
-    }
+    iosX64()
+    iosArm64()
+    iosSimulatorArm64()
 
     sourceSets {
 
