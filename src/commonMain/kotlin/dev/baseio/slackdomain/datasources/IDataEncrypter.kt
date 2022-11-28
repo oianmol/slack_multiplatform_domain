@@ -1,9 +1,9 @@
 package dev.baseio.slackdomain.datasources
 
 interface IDataEncrypter {
-    fun encrypt(byteArray: ByteArray, publicKeyBytes: ByteArray): ByteArray
+    fun encrypt(byteArray: ByteArray, publicKeyBytes: ByteArray): Pair<ByteArray,ByteArray>
 }
 
 interface IDataDecryptor {
-    fun decrypt(byteArray: ByteArray, privateKeyBytes: ByteArray): ByteArray
+    fun decrypt(byteArray: Pair<ByteArray,ByteArray>, privateKeyBytes: ByteArray): ByteArray
 }
