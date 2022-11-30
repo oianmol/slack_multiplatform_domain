@@ -9,7 +9,8 @@ interface DomainLayerMessages {
         val uuid: String,
         val workspaceId: String,
         val channelId: String,
-        val message: ByteArray,
+        val messageFirst: String,
+        val messageSecond: String,
         val sender: String,
         val createdDate: Long,
         val modifiedDate: Long,
@@ -26,7 +27,8 @@ interface DomainLayerMessages {
             if (uuid != other.uuid) return false
             if (workspaceId != other.workspaceId) return false
             if (channelId != other.channelId) return false
-            if (!message.contentEquals(other.message)) return false
+            if (!messageFirst.contentEquals(other.messageFirst)) return false
+            if (!messageSecond.contentEquals(other.messageSecond)) return false
             if (sender != other.sender) return false
             if (createdDate != other.createdDate) return false
             if (modifiedDate != other.modifiedDate) return false
@@ -41,7 +43,8 @@ interface DomainLayerMessages {
             var result = uuid.hashCode()
             result = 31 * result + workspaceId.hashCode()
             result = 31 * result + channelId.hashCode()
-            result = 31 * result + message.contentHashCode()
+            result = 31 * result + messageFirst.hashCode()
+            result = 31 * result + messageSecond.hashCode()
             result = 31 * result + sender.hashCode()
             result = 31 * result + createdDate.hashCode()
             result = 31 * result + modifiedDate.hashCode()
