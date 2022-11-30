@@ -12,7 +12,7 @@ class UseCaseSendMessage(
     ) {
     suspend operator fun invoke(
         params: DomainLayerMessages.SKMessage,
-        publicKey: dev.baseio.slackdomain.model.users.DomainLayerUsers.SKUserPublicKey
+        publicKey: dev.baseio.slackdomain.model.users.DomainLayerUsers.SKSlackKey
     ): DomainLayerMessages.SKMessage {
         val message =
             skNetworkDataSourceMessages.sendMessage(
@@ -25,7 +25,7 @@ class UseCaseSendMessage(
 
     suspend fun deleteMessage(
         params: DomainLayerMessages.SKMessage,
-        publicKey: DomainLayerUsers.SKUserPublicKey
+        publicKey: DomainLayerUsers.SKSlackKey
     ): DomainLayerMessages.SKMessage {
         val message =
             skNetworkDataSourceMessages.deleteMessage(

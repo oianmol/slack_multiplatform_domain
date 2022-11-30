@@ -15,7 +15,7 @@ interface DomainLayerUsers {
         val userSince: Long? = null,
         val phone: String? = null,
         val avatarUrl: String? = null,
-        val publicKey: SKUserPublicKey? = null
+        val publicKey: SKSlackKey? = null
     )
 
     @Serializable
@@ -36,19 +36,40 @@ interface DomainLayerUsers {
     )
 
     @Serializable
-    data class SKUserPublicKey(
+    data class SKEncryptedMessage(val first:ByteArray,val second:ByteArray) {
+        override fun equals(other: Any?): Boolean {
+            if (this === other) return true
+            if (other == null || this::class != other::class) return false
+
+            other as SKEncryptedMessage
+
+            if (!first.contentEquals(other.first)) return false
+            if (!second.contentEquals(other.second)) return false
+
+            return true
+        }
+
+        override fun hashCode(): Int {
+            var result = first.contentHashCode()
+            result = 31 * result + second.contentHashCode()
+            return result
+        }
+    }
+
+    @Serializable
+    data class SKSlackKey(
         val keyBytes: ByteArray
     ) {
         companion object {
             val DEFAULT
-                get() = SKUserPublicKey(arrayOf<Byte>().toByteArray())
+                get() = SKSlackKey(arrayOf<Byte>().toByteArray())
         }
 
         override fun equals(other: Any?): Boolean {
             if (this === other) return true
             if (other == null || this::class != other::class) return false
 
-            other as SKUserPublicKey
+            other as SKSlackKey
 
             if (!keyBytes.contentEquals(other.keyBytes)) return false
 

@@ -1,7 +1,6 @@
 package dev.baseio.slackdomain.usecases.users
 
 import dev.baseio.slackdomain.LOGGED_IN_USER
-import dev.baseio.slackdomain.datasources.SKPublicKeyRetriever
 import dev.baseio.slackdomain.datasources.local.SKLocalKeyValueSource
 import dev.baseio.slackdomain.datasources.local.channels.SKLocalDataSourceReadChannels
 import dev.baseio.slackdomain.model.channel.DomainLayerChannels
@@ -20,7 +19,6 @@ class UseCaseFetchChannelsWithSearch(
     private val useCaseSearchChannel: UseCaseSearchChannel,
     private val skLocalDataSourceReadChannels: SKLocalDataSourceReadChannels,
     private val skLocalKeyValueSource: SKLocalKeyValueSource,
-    private val skPublicKeyRetriever: SKPublicKeyRetriever
 ) {
     operator fun invoke(workspaceId: String, search: String): Flow<List<DomainLayerChannels.SKChannel>> {
         val localUsers = useCaseFetchLocalUsers(workspaceId, search).map { skUsers ->
@@ -35,7 +33,7 @@ class UseCaseFetchChannelsWithSearch(
                     receiverId = skUser.uuid,
                     uuid = uuid,
                     deleted = false,
-                    channelPublicKey = dmChannel?.channelPublicKey ?: skPublicKeyRetriever.get(uuid)
+                    channelPublicKey = dmChannel?.channelPublicKey?: DomainLayerUsers.SKSlackKey(ByteArray(0))
                 ).apply {
                     channelName = skUser.name
                     pictureUrl = skUser.avatarUrl
