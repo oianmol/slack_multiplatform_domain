@@ -8,6 +8,8 @@ class UseCaseInviteUserToChannel(private val networkSourceChannels: SKNetworkSou
   suspend fun inviteUserToChannelFromOtherDeviceOrUser(channel: DomainLayerChannels.SKChannel, userName: String): Result<List<DomainLayerChannels.SkChannelMember>> {
     return kotlin.runCatching {
       networkSourceChannels.inviteUserToChannelFromOtherDeviceOrUser(channel,userName)
+    }.also {
+      it.exceptionOrNull()?.printStackTrace()
     }
   }
 
