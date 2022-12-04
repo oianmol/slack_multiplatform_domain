@@ -1,11 +1,8 @@
-import org.jetbrains.kotlin.gradle.plugin.mpp.apple.XCFramework
 
 plugins {
     kotlin("multiplatform")
-    kotlin("native.cocoapods")
     kotlin("plugin.serialization") version "1.7.20"
     id("com.android.library")
-    id("com.rickclephas.kmp.nativecoroutines")
     id("maven-publish")
 }
 
@@ -28,22 +25,11 @@ kotlin {
         }
     }
 
-    cocoapods {
-        summary = "Slack domain Library"
-        homepage = "https://github.com/oianmol"
-        ios.deploymentTarget = "14.1"
-        framework {
-            baseName = "slack_domain_layer"
-            isStatic = true
-        }
-    }
-
     iosX64()
     iosArm64()
     iosSimulatorArm64()
 
     sourceSets {
-
         val commonMain by getting {
             dependencies {
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
@@ -51,6 +37,26 @@ kotlin {
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.0")
                 implementation(kotlin("stdlib-common"))
             }
+        }
+
+        val iosX64Main by getting{}
+        val iosSimulatorArm64Main by getting{}
+        val iosArm64Main  by getting{}
+
+        val androidMain by getting{}
+        val jvmMain by getting{}
+
+        val androidJvmCommon by creating{
+            dependsOn(commonMain)
+            androidMain.dependsOn(this)
+            jvmMain.dependsOn(this)
+        }
+
+        val iosMain by creating {
+            dependsOn(commonMain)
+            iosX64Main.dependsOn(this)
+            iosSimulatorArm64Main.dependsOn(this)
+            iosArm64Main.dependsOn(this)
         }
     }
 }
