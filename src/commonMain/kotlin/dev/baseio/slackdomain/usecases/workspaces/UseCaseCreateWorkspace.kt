@@ -14,15 +14,12 @@ class UseCaseCreateWorkspace(
     private val workspaceSource: SKNetworkSourceWorkspaces,
     private val SKAuthNetworkDataSource: SKAuthNetworkDataSource,
     private val skKeyValueData: SKLocalKeyValueSource,
-    private val coroutineDispatcherProvider: CoroutineDispatcherProvider
 ) {
     suspend operator fun invoke(email: String, password: String, domain: String) {
-        withContext(coroutineDispatcherProvider.io) {
-            val result = workspaceSource.saveWorkspace(email, password, domain)
-            skKeyValueData.save(AUTH_TOKEN, result.token)
-            val user = SKAuthNetworkDataSource.getLoggedInUser().getOrThrow()
-            val json = Json.encodeToString(user)
-            skKeyValueData.save(LOGGED_IN_USER, json)
-        }
+        val result = workspaceSource.saveWorkspace(email, password, domain)
+        skKeyValueData.save(AUTH_TOKEN, result.token)
+        val user = SKAuthNetworkDataSource.getLoggedInUser().getOrThrow()
+        val json = Json.encodeToString(user)
+        skKeyValueData.save(LOGGED_IN_USER, json)
     }
 }
