@@ -38,26 +38,6 @@ kotlin {
                 implementation(kotlin("stdlib-common"))
             }
         }
-
-        val iosX64Main by getting{}
-        val iosSimulatorArm64Main by getting{}
-        val iosArm64Main  by getting{}
-
-        val androidMain by getting{}
-        val jvmMain by getting{}
-
-        val androidJvmCommon by creating{
-            dependsOn(commonMain)
-            androidMain.dependsOn(this)
-            jvmMain.dependsOn(this)
-        }
-
-        val iosMain by creating {
-            dependsOn(commonMain)
-            iosX64Main.dependsOn(this)
-            iosSimulatorArm64Main.dependsOn(this)
-            iosArm64Main.dependsOn(this)
-        }
     }
 }
 
