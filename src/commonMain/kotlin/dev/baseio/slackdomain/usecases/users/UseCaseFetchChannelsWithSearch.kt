@@ -23,7 +23,7 @@ class UseCaseFetchChannelsWithSearch(
     operator fun invoke(workspaceId: String, search: String): Flow<List<DomainLayerChannels.SKChannel>> {
         val localUsers = useCaseFetchLocalUsers(workspaceId, search).map { skUsers ->
             skUsers.map { skUser ->
-                val user = Json.decodeFromString<DomainLayerUsers.SKUser>(skLocalKeyValueSource.get(LOGGED_IN_USER)!!)
+                val user = Json.decodeFromString<DomainLayerUsers.SKUser>(skLocalKeyValueSource.get(LOGGED_IN_USER.plus(workspaceId))!!)
                 val dmChannel =
                     skLocalDataSourceReadChannels.getChannelByReceiverIdAndSenderId(workspaceId, skUser.uuid, user.uuid)
                 val uuid = dmChannel?.uuid ?: (workspaceId + "${Clock.System.now().toEpochMilliseconds()}")
