@@ -1,7 +1,7 @@
 
 plugins {
     kotlin("multiplatform")
-    kotlin("plugin.serialization") version "1.8.0"
+    kotlin(BuildPlugins.SERIALIZATION) version Lib.Kotlin.KOTLIN_VERSION
     id("com.android.library")
     id("maven-publish")
 }
