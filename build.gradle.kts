@@ -1,9 +1,8 @@
-
 plugins {
-    id("maven-publish")
-    alias(libs.plugins.kotlin.multiplatform)
+    id(libs.plugins.kotlin.multiplatform.get().pluginId)
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.serialization)
+    id("maven-publish")
 }
 
 group = "dev.baseio.slackclone"
